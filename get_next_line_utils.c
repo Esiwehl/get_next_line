@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/10/30 19:00:59 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/10/31 18:38:01 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ char	*ft_strdup(char *s1)
 	}
 	ret[idx] = '\0';
 	return (ret);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != (unsigned char) c)
+	{
+		if (*s == '\0')
+			return (NULL);
+		s++;
+	}
+	return ((char *)s);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
