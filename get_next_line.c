@@ -26,8 +26,9 @@ char	*put_newline(char *arr)
 	while (arr[idx] != '\n' && arr[idx] != '\0')
 		idx++;
 	tmp = ft_substr(arr, 0, idx + 1);
-	if (!tmp)
-		return (NULL);
+	if (!tmp){
+		free(tmp);
+		return (NULL);}
 	return (tmp);
 }
 
@@ -62,7 +63,7 @@ char	*read_lines( char *line, int fd)
 	while (!ft_strchr(buff, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
-		if (bytes_read < 0 || !buff[0])
+		if (bytes_read < 0)
 			return (NULL);
 		buff[bytes_read] = '\0';
 		line = ft_strjoin(line, buff);
@@ -92,7 +93,7 @@ char	*get_next_line(int fd)
 	return (ret_line);
 }
 
-#include <fcntl.h>
+/*#include <fcntl.h>
 int	main(void)
 { 
 	const int	fd1 = open("foo.txt", O_RDWR); 
@@ -102,16 +103,27 @@ int	main(void)
 		printf("I failed you\n");
 	else
 		printf("Opened fd:: %d\n", fd1); 
+	
+	// while (s)
+	// {
+	// 	s = get_next_line(fd);
+	// 	printf("%s", s);
+	// 	free (s);
+	// }
+
 	gnl = get_next_line(fd1);
-	printf("GNL ret:: %s\n", gnl);
+	printf("1 GNL ret:: %s\n", gnl);
+	free(gnl);
+	gnl = get_next_line(fd1);
+	printf("2 GNL ret:: %s\n", gnl);
 	free(gnl);
 	
 	if (close(fd1) < 0) 
 		printf("Closed unsuccesfully :D\n");
 	else
 		printf("Closed succesfully :D\n");
-	// system("leaks run");
-}
+	system("leaks run");
+}*/
 
 // Read lines (to check whether there even is \n)
 
