@@ -12,32 +12,78 @@
 
 #include "get_next_line.h"
 
+char	*put_newline(char *arr)
+{
+	char		*tmp;
+	size_t		idx;
+
+	idx = 0;
+	if (!arr[idx])
+	{
+		free(arr);
+		return (NULL);
+	}
+	while (arr[idx] != '\n' && arr[idx] != '\0')
+		idx++;
+	tmp = ft_substr(arr, 0, idx + 1);
+	if (!tmp)
+		return (NULL);
+	return (tmp);
+}
+
+char	*ft_get_nxt(char *str)
+{
+	int		idx;
+	char	*tmp;
+
+	idx = 0;
+	while (string[idx])
+	{
+		if (string[idx] == '\n')
+		{
+			tmp = ft_strdup(&string[idx + 1]);
+			free(string);
+			return (tmp);
+		}
+		idx++;
+	}
+	if (!string[idx])
+		free(string);
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*line;
+	char 		*ret_line;
 	ssize_t		bytes_read;
-	// size_t		idx;
 	char		buff[BUFFER_SIZE + 1];
 
-	// idx = 0;
 	bytes_read = 1;
 	while (!ft_strchr(buff, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0 || !buff[0])
 			return (NULL);
-		// idx++;
+		buff[bytes_read] = '\0';
+		line = ft_strjoin(line, buff);
 	}
-	// printf("Buff = %s\n", buff);
-	line = ft_strdup(buff);
-	// printf("Line = %s", line);
-	return (line);
+	if (!line)
+	{
+		free(line);
+		return (NULL);
+	}
+	ret_line = put_newline(line);
+	if (!ret_line)
+		return (NULL);
+	line = ft_get_nxt(line);
+	return (ret_line);
 }
-/*
+
 #include <fcntl.h>
 int	main(void)
 { 
-	const int	fd1 = open("/Users/ewehl/francinette/tests/get_next_line/gnlTester/files/42_no_nl", O_RDWR); 
+	const int	fd1 = open("foo.txt", O_RDWR); 
 	char *gnl;
 
 	if (fd1 < 0) 
@@ -53,6 +99,9 @@ int	main(void)
 	else
 		printf("Closed succesfully :D\n"); 
 }*/
+
+// Read lines (to check whether there even is \n)
+// 
 
 // Am not appending the \n now, because strdup copies until we see \n
 

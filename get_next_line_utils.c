@@ -80,3 +80,26 @@ char	*ft_strjoin(char *s1, char *s2)
 	joined[len1 + len2 + 1] = '\0';
 	return (joined);
 }
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*substr;
+	size_t	idx;
+
+	if (!s)
+		return (NULL);
+	if (start > ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
+	if (len > (ft_strlen(s) - start - 1))
+		len = ft_strlen(s) - start - 1;
+	substr = (char *)malloc((len +1) * sizeof(char));
+	if (!substr)
+		return (NULL);
+	idx = 0;
+	while (idx < len && s[start])
+		substr[idx++] = s[start++];
+	substr[idx] = '\0';
+	return (substr);
+}
