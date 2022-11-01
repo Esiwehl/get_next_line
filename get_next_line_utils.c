@@ -32,7 +32,10 @@ char	*ft_strdup(char *s1)
 	len = ft_strlen(s1);
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
+	{
+		free(ret);
 		return (NULL);
+	}
 	while (s1[idx])
 	{
 		ret[idx] = s1[idx];
@@ -55,9 +58,9 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	char	*joined;
 	size_t	idx;
-	size_t	jdx;
+	size_t	s1_len;
+	char	*strj;
 
 	if (!s1)
 	{
@@ -66,18 +69,19 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	joined = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!joined)
+	s1_len = ft_strlen(s1);
+	strj = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 1));
+	if (!strj)
 		return (NULL);
 	idx = -1;
 	while (s1[++idx])
-		joined[idx] = s1[idx];
-	jdx = 0;
-	while (s2[jdx])
-		joined[idx++] = s2[jdx++];
-	joined[idx] = '\0';
+		strj[idx] = s1[idx];
+	idx = -1;
+	while (s2[++idx])
+		strj[s1_len + idx] = s2[idx];
+	strj[s1_len + idx] = '\0';
 	free(s1);
-	return (joined);
+	return (strj);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)

@@ -67,7 +67,7 @@ char	*read_lines( char *line, int fd)
 		buff[bytes_read] = '\0';
 		line = ft_strjoin(line, buff);
 	}
-	if (!line)
+	if (!line[0])
 	{
 		free(line);
 		return (NULL);
@@ -92,7 +92,7 @@ char	*get_next_line(int fd)
 	return (ret_line);
 }
 
-/*#include <fcntl.h>
+#include <fcntl.h>
 int	main(void)
 { 
 	const int	fd1 = open("foo.txt", O_RDWR); 
@@ -111,7 +111,7 @@ int	main(void)
 	else
 		printf("Closed succesfully :D\n");
 	// system("leaks run");
-}*/
+}
 
 // Read lines (to check whether there even is \n)
 
