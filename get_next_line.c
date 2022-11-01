@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/10/31 18:37:19 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/01 15:37:37 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,31 @@ char	*put_newline(char *arr)
 	return (tmp);
 }
 
-char	*ft_get_nxt(char *str)
+char	*get_nxt(char *arr)
 {
 	int		idx;
 	char	*tmp;
 
 	idx = 0;
-	while (string[idx])
+	while (arr[idx])
 	{
-		if (string[idx] == '\n')
+		if (arr[idx] == '\n')
 		{
-			tmp = ft_strdup(&string[idx + 1]);
-			free(string);
+			tmp = ft_strdup(&arr[idx + 1]);
+			free(arr);
 			return (tmp);
 		}
 		idx++;
 	}
-	if (!string[idx])
-		free(string);
+	if (!arr[idx])
+		free(arr);
 	return (NULL);
 }
 
-char	*get_next_line(int fd)
+char	*read_lines( char *line, int fd)
 {
-	static char	*line;
-	char 		*ret_line;
-	ssize_t		bytes_read;
 	char		buff[BUFFER_SIZE + 1];
+	ssize_t		bytes_read;
 
 	bytes_read = 1;
 	while (!ft_strchr(buff, '\n') && bytes_read != 0)
@@ -73,14 +71,27 @@ char	*get_next_line(int fd)
 		free(line);
 		return (NULL);
 	}
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*line;
+	char		*ret_line;
+
+	if (BUFFER_SIZE <= 0)
+		return (NULL);
+	line = read_lines(line, fd);
+	if (!line)
+		return (NULL);
 	ret_line = put_newline(line);
 	if (!ret_line)
 		return (NULL);
-	line = ft_get_nxt(line);
+	line = get_nxt(line);
 	return (ret_line);
 }
 
-#include <fcntl.h>
+/*#include <fcntl.h>
 int	main(void)
 { 
 	const int	fd1 = open("foo.txt", O_RDWR); 
@@ -91,24 +102,27 @@ int	main(void)
 	else
 		printf("Opened fd:: %d\n", fd1); 
 	gnl = get_next_line(fd1);
-	// printf("GNL ret:: %s\n", gnl);
+	printf("GNL ret:: %s\n", gnl);
 	free(gnl);
 	
 	if (close(fd1) < 0) 
 		printf("Closed unsuccesfully :D\n");
 	else
-		printf("Closed succesfully :D\n"); 
+		printf("Closed succesfully :D\n");
+	// system("leaks run");
 }*/
 
 // Read lines (to check whether there even is \n)
-// 
 
-// Am not appending the \n now, because strdup copies until we see \n
+// Am not appending the \n now, because strdup copies 
+// until we see \n
 
 //	I shouldn't need to check for empty str in ft_helpers
-//	Because we shouldn't even be allowed to get in there if it doesn't exist.
+//	Because we shouldn't even be allowed to get in there 
+//  if it doesn't exist.
 
 // Is my understanding correct that -D [name] appends
 // a define of [name] to the start of my "main"
 
-//		gcc -Wall -Werror -Wextra *.c -o run-fsanitize=address -g && ./run
+//	gcc -Wall -Werror -Wextra -D BUFFER_SIZE=10 *.c -o run 
+//	-fsanitize=address -g && ./run

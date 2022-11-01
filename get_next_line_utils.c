@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/10/31 18:38:01 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/01 15:32:27 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,29 +55,28 @@ char	*ft_strchr(const char *s, int c)
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	len1;
-	size_t	len2;
-	size_t	idx;
 	char	*joined;
+	size_t	idx;
+	size_t	jdx;
 
-	idx = 0;
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	joined = malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char) + 1);
+		s1[0] = '\0';
+	}
+	if (!s1 || !s2)
+		return (NULL);
+	joined = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!joined)
 		return (NULL);
-	while (s1[idx])
-	{
+	idx = -1;
+	while (s1[++idx])
 		joined[idx] = s1[idx];
-		idx++;
-	}
-	idx = 0;
-	while (s2[idx])
-	{
-		joined[idx] = s2[idx];
-		idx++;
-	}
-	joined[len1 + len2 + 1] = '\0';
+	jdx = 0;
+	while (s2[jdx])
+		joined[idx++] = s2[jdx++];
+	joined[idx] = '\0';
+	free(s1);
 	return (joined);
 }
 
@@ -89,12 +88,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start > ft_strlen(s))
-		return (ft_strdup(""));
+			return (ft_strdup(""));
 	if (len > ft_strlen(s))
 		len = ft_strlen(s);
-	if (len > (ft_strlen(s) - start - 1))
-		len = ft_strlen(s) - start - 1;
-	substr = (char *)malloc((len +1) * sizeof(char));
+	substr = (char *)malloc((len + 1) * sizeof(char));
 	if (!substr)
 		return (NULL);
 	idx = 0;
