@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.c                                    :+:    :+:            */
+/*   get_next_line_bonus.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 14:49:16 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/08 14:24:47 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*put_newline(char *arr)
 {
@@ -83,61 +83,17 @@ char	*read_lines(char *line, int fd)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[OPEN_MAX];
 	char		*ret_line;
 
-	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX || fd > OPEN_MAX)
 		return (NULL);
-	line = read_lines(line, fd);
-	if (!line)
+	line[fd] = read_lines(line[fd], fd);
+	if (!line[fd])
 		return (NULL);
-	ret_line = put_newline(line);
+	ret_line = put_newline(line[fd]);
 	if (!ret_line)
 		return (NULL);
-	line = get_nxt(line);
+	line[fd] = get_nxt(line[fd]);
 	return (ret_line);
 }
-
-/*
-#include <fcntl.h>
-int	main(void)
-{ 
-	const int	fd1 = open("foo.txt", O_RDONLY);
-	// const int	fd2 = open("get_next_line.c", O_RDONLY);
-	// char 		*str = "cheese";
-	char *gnl;
-
-	if (fd1 < 0){
-		printf("I failed you\n");
-		printf("I failed you\n");}
-	else{
-		printf("Opened fd:: %d\n", fd1);}
-		// printf("Opened fd:: %d\n", fd2);}
-	
-	// while (str)
-	// {
-	// 	str = get_next_line(fd1);
-	// 	printf("fd1: %s\n", str);
-	// 	free(str);
-	// 	// str = get_next_line(fd2);
-	// 	// printf("fd2:: %s", str);
-	// 	// free(str);
-	// }
-
-	gnl = get_next_line(fd1);
-	printf("1 GNL ret:: %s\n", gnl);
-	char c = 0; read(fd1, &c, 1); printf("c = %c\n", c);
-	free(gnl);
-	// gnl = get_next_line(fd1);
-	// printf("2 GNL ret:: %s\n", gnl);
-	// free(gnl);
-	
-	if (close(fd1) < 0) 
-		printf("Closed unsuccesfully :D\n");
-	else
-		printf("Closed succesfully :D\n");
-	system("leaks -q run");
-}*/
-
-//	gcc -Wall -Werror -Wextra -D BUFFER_SIZE=10 *.c -o run 
-//	-fsanitize=address -g && ./run
