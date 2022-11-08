@@ -6,26 +6,26 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 14:49:16 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/08 15:48:32 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*put_newline(char *arr)
+char	*put_newline(char *nline)
 {
 	char		*tmp;
 	size_t		idx;
 
 	idx = 0;
-	if (!arr[idx])
+	if (!nline[idx])
 	{
-		free(arr);
+		free(nline);
 		return (NULL);
 	}
-	while (arr[idx] != '\n' && arr[idx] != '\0')
+	while (nline[idx] != '\n' && nline[idx] != '\0')
 		idx++;
-	tmp = ft_substr(arr, 0, idx + 1);
+	tmp = ft_substr(nline, 0, idx + 1);
 	if (!tmp)
 	{
 		free(tmp);
@@ -34,24 +34,24 @@ char	*put_newline(char *arr)
 	return (tmp);
 }
 
-char	*get_nxt(char *arr)
+char	*get_nxt(char *nxtline)
 {
 	int		idx;
 	char	*tmp;
 
 	idx = 0;
-	while (arr[idx])
+	while (nxtline[idx])
 	{
-		if (arr[idx] == '\n')
+		if (nxtline[idx] == '\n')
 		{
-			tmp = ft_strdup(&arr[idx + 1]);
-			free(arr);
+			tmp = ft_strdup(&nxtline[idx + 1]);
+			free(nxtline);
 			return (tmp);
 		}
 		idx++;
 	}
-	if (!arr[idx])
-		free(arr);
+	if (!nxtline[idx])
+		free(nxtline);
 	return (NULL);
 }
 
@@ -98,8 +98,7 @@ char	*get_next_line(int fd)
 	return (ret_line);
 }
 
-/*
-#include <fcntl.h>
+/*#include <fcntl.h>
 int	main(void)
 { 
 	const int	fd1 = open("foo.txt", O_RDONLY);
