@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 14:23:36 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/08 23:02:57 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
-		return (NULL);
+		return (free(s1), NULL);
 	s1_len = ft_strlen(s1);
 	strj = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 1));
 	if (!strj)

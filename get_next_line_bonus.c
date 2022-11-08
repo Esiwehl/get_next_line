@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 15:47:51 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/08 20:06:01 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,4 +96,46 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line[fd] = get_nxt(line[fd]);
 	return (ret_line);
+}
+
+#include <fcntl.h>
+int	main(void)
+{ 
+	const int	fd1 = open("foo.txt", O_RDONLY);
+	const int	fd2 = open("foo.txt", O_RDONLY);
+	char 		*str = "cheese";
+	// char *gnl;
+
+	if (fd1 < 0)
+		printf("I failed you\n");
+	else{
+		printf("Opened fd:: %d\n", fd1);}
+		// printf("Opened fd:: %d\n", fd2);}
+	
+	printf("line[fd1] = %d\n", fd1);
+	printf("line[fd2] = %d\n", fd2);
+
+	while (str)
+	{
+		str = get_next_line(fd1);
+		printf("fd1:: %s\n", str);
+		free(str);
+		str = get_next_line(fd2);
+		printf("fd2:: %s\n", str);
+		free(str);
+	}
+
+	// gnl = get_next_line(fd1);
+	// printf("1 GNL ret:: %s\n", gnl);
+	// // char c = 0; read(fd1, &c, 1); printf("c = %c\n", c);
+	// free(gnl);
+	// gnl = get_next_line(fd2);
+	// printf("2 GNL ret:: %s\n", gnl);
+	// free(gnl);
+	
+	if (close(fd1) < 0) 
+		printf("Closed unsuccesfully :D\n");
+	else
+		printf("Closed succesfully :D\n");
+	system("leaks -q run");
 }
