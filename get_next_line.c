@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/09 20:36:06 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/09 20:44:14 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ char	*get_nxt(char *nxtline)
 	{
 		if (nxtline[idx] == '\n')
 		{
-			puts("Here");
-			// tmp = ft_strdup(&nxtline[idx + 1]);
-			tmp = NULL;
+			tmp = ft_strdup(&nxtline[idx + 1]);
 			free(nxtline);
 			return (tmp);
 		}

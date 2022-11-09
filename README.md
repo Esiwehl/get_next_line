@@ -2,5 +2,4 @@
 
 Reading a line from a fd is way too tedious
 
-This project introduced highly interesting new concept in C programming: static
-variables. These are; something I still have to find out :D
+This project introduces a highly interesting concept in C programming: static variables. These are variables which hold their value even when they are out of scope.
