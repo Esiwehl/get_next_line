@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/09 20:44:14 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/09 21:20:38 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*read_lines(char *line, int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	ssize_t		bytes_read;
-	
+
 	bytes_read = 1;
 	buff[0] = '\0';
 	while (!(ft_strchr(buff, '\n')) && bytes_read != 0)
