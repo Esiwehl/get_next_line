@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 15:48:32 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/09 20:36:06 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,9 @@ char	*put_newline(char *nline)
 	size_t		idx;
 
 	idx = 0;
-	if (!nline[idx])
-	{
-		free(nline);
-		return (NULL);
-	}
 	while (nline[idx] != '\n' && nline[idx] != '\0')
 		idx++;
 	tmp = ft_substr(nline, 0, idx + 1);
-	if (!tmp)
-	{
-		free(tmp);
-		return (NULL);
-	}
 	return (tmp);
 }
 
@@ -44,14 +34,15 @@ char	*get_nxt(char *nxtline)
 	{
 		if (nxtline[idx] == '\n')
 		{
-			tmp = ft_strdup(&nxtline[idx + 1]);
+			puts("Here");
+			// tmp = ft_strdup(&nxtline[idx + 1]);
+			tmp = NULL;
 			free(nxtline);
 			return (tmp);
 		}
 		idx++;
 	}
-	if (!nxtline[idx])
-		free(nxtline);
+	free(nxtline);
 	return (NULL);
 }
 
@@ -59,25 +50,19 @@ char	*read_lines(char *line, int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	ssize_t		bytes_read;
-
+	
 	bytes_read = 1;
 	buff[0] = '\0';
 	while (!(ft_strchr(buff, '\n')) && bytes_read != 0)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0)
-		{
-			free(line);
-			return (NULL);
-		}
+			return (free(line), NULL);
 		buff[bytes_read] = '\0';
 		line = ft_strjoin(line, buff);
 	}
 	if (!line[0])
-	{
-		free(line);
-		return (NULL);
-	}
+		return (free(line), NULL);
 	return (line);
 }
 
@@ -98,45 +83,9 @@ char	*get_next_line(int fd)
 	return (ret_line);
 }
 
-/*#include <fcntl.h>
-int	main(void)
-{ 
-	const int	fd1 = open("foo.txt", O_RDONLY);
-	// const int	fd2 = open("get_next_line.c", O_RDONLY);
-	// char 		*str = "cheese";
-	char *gnl;
-
-	if (fd1 < 0){
-		printf("I failed you\n");
-		printf("I failed you\n");}
-	else{
-		printf("Opened fd:: %d\n", fd1);}
-		// printf("Opened fd:: %d\n", fd2);}
-	
-	// while (str)
-	// {
-	// 	str = get_next_line(fd1);
-	// 	printf("fd1: %s\n", str);
-	// 	free(str);
-	// 	// str = get_next_line(fd2);
-	// 	// printf("fd2:: %s", str);
-	// 	// free(str);
-	// }
-
-	gnl = get_next_line(fd1);
-	printf("1 GNL ret:: %s\n", gnl);
-	char c = 0; read(fd1, &c, 1); printf("c = %c\n", c);
-	free(gnl);
-	// gnl = get_next_line(fd1);
-	// printf("2 GNL ret:: %s\n", gnl);
-	// free(gnl);
-	
-	if (close(fd1) < 0) 
-		printf("Closed unsuccesfully :D\n");
-	else
-		printf("Closed succesfully :D\n");
-	system("leaks -q run");
-}*/
+// Say in get_nxt my strdup fails, should I then not return anything
+// at all, not even the string I already read? Or should I still return
+// just nothing afterwards/.
 
 //	gcc -Wall -Werror -Wextra -D BUFFER_SIZE=10 *.c -o run 
 //	-fsanitize=address -g && ./run
