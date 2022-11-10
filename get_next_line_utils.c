@@ -7,7 +7,11 @@
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /*   Updated: 2022/11/08 23:02:57 by ewehl         ########   odam.nl         */
+=======
+/*   Updated: 2022/11/10 15:10:23 by ewehl         ########   odam.nl         */
+>>>>>>> Stashed changes
 =======
 /*   Updated: 2022/11/10 15:10:23 by ewehl         ########   odam.nl         */
 >>>>>>> Stashed changes
@@ -69,10 +73,14 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1)
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	{
 		s1 = malloc(sizeof(char) + 1);
 		s1[0] = '\0';
 	}
+=======
+		{puts("strdup 1"); s1 = ft_strdup("");}
+>>>>>>> Stashed changes
 =======
 		{puts("strdup 1"); s1 = ft_strdup("");}
 >>>>>>> Stashed changes
