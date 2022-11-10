@@ -6,15 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/*   Updated: 2022/11/08 23:02:57 by ewehl         ########   odam.nl         */
-=======
-/*   Updated: 2022/11/10 15:10:23 by ewehl         ########   odam.nl         */
->>>>>>> Stashed changes
-=======
-/*   Updated: 2022/11/10 15:10:23 by ewehl         ########   odam.nl         */
->>>>>>> Stashed changes
+/*   Updated: 2022/11/10 16:22:36 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +64,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*strj;
 
 	if (!s1)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	{
-		s1 = malloc(sizeof(char) + 1);
-		s1[0] = '\0';
-	}
-=======
 		{puts("strdup 1"); s1 = ft_strdup("");}
->>>>>>> Stashed changes
-=======
-		{puts("strdup 1"); s1 = ft_strdup("");}
->>>>>>> Stashed changes
 	if (!s1 || !s2)
 		return (free(s1), NULL);
 	s1_len = ft_strlen(s1);

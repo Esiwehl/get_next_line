@@ -6,15 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/*   Updated: 2022/11/08 18:22:44 by ewehl         ########   odam.nl         */
-=======
-/*   Updated: 2022/11/10 16:08:43 by ewehl         ########   odam.nl         */
->>>>>>> Stashed changes
-=======
-/*   Updated: 2022/11/10 16:08:43 by ewehl         ########   odam.nl         */
->>>>>>> Stashed changes
+/*   Updated: 2022/11/10 16:21:29 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
