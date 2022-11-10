@@ -6,7 +6,11 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
+<<<<<<< Updated upstream
 /*   Updated: 2022/11/08 23:02:57 by ewehl         ########   odam.nl         */
+=======
+/*   Updated: 2022/11/10 15:10:23 by ewehl         ########   odam.nl         */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +31,9 @@ char	*ft_strdup(char *s1)
 	size_t	len;
 	size_t	idx;
 	char	*ret;
+	static int x;
 
+	x++;
 	idx = 0;
 	len = ft_strlen(s1);
 	ret = malloc(sizeof(char) * (len + 1));
@@ -39,6 +45,8 @@ char	*ft_strdup(char *s1)
 		idx++;
 	}
 	ret[idx] = '\0';
+	if (x == 2)
+		return (free(ret), NULL);
 	return (ret);
 }
 
@@ -60,10 +68,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*strj;
 
 	if (!s1)
+<<<<<<< Updated upstream
 	{
 		s1 = malloc(sizeof(char) + 1);
 		s1[0] = '\0';
 	}
+=======
+		{puts("strdup 1"); s1 = ft_strdup("");}
+>>>>>>> Stashed changes
 	if (!s1 || !s2)
 		return (free(s1), NULL);
 	s1_len = ft_strlen(s1);

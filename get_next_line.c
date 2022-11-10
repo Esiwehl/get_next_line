@@ -6,7 +6,11 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
+<<<<<<< Updated upstream
 /*   Updated: 2022/11/08 18:22:44 by ewehl         ########   odam.nl         */
+=======
+/*   Updated: 2022/11/10 16:08:43 by ewehl         ########   odam.nl         */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +49,8 @@ char	*get_nxt(char *nxtline)
 		if (nxtline[idx] == '\n')
 		{
 			tmp = ft_strdup(&nxtline[idx + 1]);
+			if (!tmp)
+				return (puts("Here"), free(nxtline), nxtline[0] = 0, NULL);
 			free(nxtline);
 			return (tmp);
 		}
@@ -72,6 +78,8 @@ char	*read_lines(char *line, int fd)
 		}
 		buff[bytes_read] = '\0';
 		line = ft_strjoin(line, buff);
+		if (!line)
+			return (NULL);
 	}
 	if (!line[0])
 	{
@@ -84,6 +92,7 @@ char	*read_lines(char *line, int fd)
 char	*get_next_line(int fd)
 {
 	static char	*line;
+	char		*checknl;
 	char		*ret_line;
 
 	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
@@ -94,7 +103,16 @@ char	*get_next_line(int fd)
 	ret_line = put_newline(line);
 	if (!ret_line)
 		return (NULL);
-	line = get_nxt(line);
+	checknl = get_nxt(line);
+	printf("check = %s\n", checknl);
+	printf("line = %s\n", line);
+	printf("nl = %s\n", !checknl ? "true" : "false");
+	printf("line = %s\n", !line ? "true" : "false");
+	if (!checknl && !line[0])
+		return (, NULL);
+	line = checknl;
+	printf("line = %s\n", line);
+	printf("ret_line = %s\n", ret_line);
 	return (ret_line);
 }
 
