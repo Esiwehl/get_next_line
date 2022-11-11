@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/11 16:04:41 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/11 21:51:21 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*ft_strdup(const char *s1)
 	x++;
 	idx = 0;
 	len = ft_strlen(s1);
+	// printf("len:: %zu\n", len);
 	ret = malloc(sizeof(char) * (len + 1));
 	if (!ret)
 		return (NULL);
@@ -65,7 +66,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*strj;
 
 	if (!s1)
-		{/*puts("strdup 1");*/ s1 = ft_strdup("");}
+		{s1 = ft_strdup("");}
+		// {/*puts("strdup 1");*/ s1 = ft_strdup("");}
 	if (!s1 || !s2)
 		return (free(s1), NULL);
 	s1_len = ft_strlen(s1);
@@ -79,6 +81,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (s2[++idx])
 		strj[s1_len + idx] = s2[idx];
 	strj[s1_len + idx] = '\0';
+	// printf("in strjoin address of strj:: %p\n", strj);
 	return (free(s1), strj);
 }
 
@@ -95,7 +98,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 		len = ft_strlen(s);
 	substr = malloc(sizeof(char) + (len + 1));
 	if (!substr)
-		return (/*free(s),*/NULL);
+		return (free(s),NULL);
 	idx = 0;
 	while (idx < len && s[start])
 		substr[idx++] = s[start++];

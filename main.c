@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/09 19:32:12 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/11 15:31:01 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/11 20:24:28 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(void)
 	char		*str = "a";
 	int			p = 0;
 
+	printf("\t\t\tIN MAIN\n");
 	while (str)
 	{
 		p++;
