@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 20:06:01 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/11 14:57:43 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ char	*get_next_line(int fd)
 	return (ret_line);
 }
 
-#include <fcntl.h>
+/*#include <fcntl.h>
 int	main(void)
 { 
 	const int	fd1 = open("foo.txt", O_RDONLY);
@@ -138,4 +138,4 @@ int	main(void)
 	else
 		printf("Closed succesfully :D\n");
 	system("leaks -q run");
-}
+}*/

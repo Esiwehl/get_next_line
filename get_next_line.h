@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:03:06 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 15:49:04 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/11 16:04:31 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # include <limits.h>
 
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *s1);
+char	*ft_strdup(const char *s1);
 char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_substr(char *s, unsigned int start, size_t len);
 size_t	ft_strlen(const char *str);
 
 char	*put_newline(char *nline);
