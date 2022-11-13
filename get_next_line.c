@@ -6,12 +6,11 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/11 21:51:54 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/13 11:54:34 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-// #include "debug.h"
 
 char	*put_newline(char *nline)
 {
@@ -35,17 +34,13 @@ char	*get_nxt(char *nxtline)
 	{
 		if (nxtline[idx] == '\n')
 		{
-			puts("Here");
 			tmp = ft_strdup(&nxtline[idx + 1]);
-			// printf("In getnxt addres of tmp:: %p\n", tmp);
 			if (!tmp)
 				return (NULL);
-			// free(nxtline);
 			return (tmp);
 		}
 		idx++;
 	}
-	// free(nxtline);
 	return (NULL);
 }
 
@@ -78,27 +73,27 @@ char	*get_next_line(int fd)
 	char		*checknl;
 	char		*tmp;
 
-	// printf("in GNL address of line:: %p\n", line);
 	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	line = read_lines(line, fd);
 	tmp = line;
-	printf("tmp contains:: %s\n", tmp);
+	// printf("tmp contains:: %s\n", tmp);
 	// printf("in GNL address of line after read_lines:: %p\n", line);
 	if (!line)
 		return (NULL);
 	ret_line = put_newline(line);
-	printf("line contains :: %s\n", ret_line);
+	// printf("line contains :: %s\n", ret_line);
 	// printf("in GNL address of ret_line:: %p\n", ret_line);
 	if (!ret_line)
 		return (free(line), NULL);
 	checknl = get_nxt(tmp);
-	printf("checknl contains:: %s\n", checknl);
+	// printf("checknl contains:: %s\n", checknl);
 	free(line);
 	line = checknl;
-	if (!line && tmp)
+	// printf("tmp = %s\n", line);
+	if ((!line && tmp)|| (line && tmp))
 		return (ret_line);
-	return (free(ret_line), NULL);
+	return (/*puts("Here"),*/free(ret_line), NULL);
 }
 
 // Say in get_nxt my strdup fails, should I then not return anything
