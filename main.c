@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/09 19:32:12 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/11 20:24:28 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/13 17:04:11 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int	main(void)
 	int			p = 0;
 
 	printf("\t\t\tIN MAIN\n");
+	// for (int i = 0; i < 5; i++)
+	// {
+	// 	str = get_next_line(fd);
+	// 	printf("[%d] line = %s\n",i, str);
+	// 	free(str);
+	// }	
 	while (str)
 	{
 		p++;

@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/13 11:54:34 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/13 16:59:52 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,39 @@ char	*put_newline(char *nline)
 	while (nline[idx] != '\n' && nline[idx] != '\0')
 		idx++;
 	tmp = ft_substr(nline, 0, idx + 1);
-	return (tmp);
+	printf("nline add:: %p\n", nline);
+	printf("tmp add:: %p\n", tmp);
+	return(tmp);
 }
 
 char	*get_nxt(char *nxtline)
 {
-	int		idx;
 	char	*tmp;
 
-	idx = 0;
-	while (nxtline[idx])
+	printf("nxtline == %s", nxtline);
+	tmp = ft_strchr(nxtline, '\n');
+	printf("tmp == %s", tmp);
+	/*while (nxtline[idx])
 	{
+		printf("idx = %d\n", idx);
 		if (nxtline[idx] == '\n')
 		{
+			printf(" inside idx = %d\n", idx);
 			tmp = ft_strdup(&nxtline[idx + 1]);
-			if (!tmp)
-				return (NULL);
 			return (tmp);
 		}
 		idx++;
-	}
-	return (NULL);
+	}*/
+	if (*tmp == '\n' && tmp + 1)
+		tmp++;
+	return (tmp);
 }
 
 char	*read_lines(char *line, int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	ssize_t		bytes_read;
+	char		*tmp;
 
 	bytes_read = 1;
 	buff[0] = '\0';
@@ -55,14 +61,17 @@ char	*read_lines(char *line, int fd)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0)
-			return (free(line), NULL); // Not sure if this still needs to be here...
+			return (free(line), NULL);
 		buff[bytes_read] = '\0';
-		line = ft_strjoin(line, buff);
+		tmp = ft_strjoin(line, buff);
+		line = tmp;
+		free(tmp);
 		if (!line)
 			return (NULL);
 	}
+	printf("readlines tmp add:: %p\n", tmp);
 	if (!line[0])
-		return (free(line),NULL);
+		return (free(line), NULL);
 	return (line);
 }
 
@@ -76,24 +85,23 @@ char	*get_next_line(int fd)
 	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	line = read_lines(line, fd);
+	printf("Start line = %s\n", line);
 	tmp = line;
-	// printf("tmp contains:: %s\n", tmp);
-	// printf("in GNL address of line after read_lines:: %p\n", line);
 	if (!line)
 		return (NULL);
 	ret_line = put_newline(line);
-	// printf("line contains :: %s\n", ret_line);
-	// printf("in GNL address of ret_line:: %p\n", ret_line);
+	printf("retLine = %s\n", ret_line);
 	if (!ret_line)
-		return (free(line), NULL);
+		return (NULL);
 	checknl = get_nxt(tmp);
-	// printf("checknl contains:: %s\n", checknl);
-	free(line);
+	// free(line);
 	line = checknl;
-	// printf("tmp = %s\n", line);
-	if ((!line && tmp)|| (line && tmp))
-		return (ret_line);
-	return (/*puts("Here"),*/free(ret_line), NULL);
+	// if (!((!line && tmp) /*|| (line && tmp)*/))
+	// 	return (free(ret_line), NULL);
+	printf("ret_line add:: %p\n", ret_line);
+	printf("line add:: %p\n", line);
+	printf("End line = %s\n", line);
+	return (puts("Here"), ret_line);
 }
 
 // Say in get_nxt my strdup fails, should I then not return anything
