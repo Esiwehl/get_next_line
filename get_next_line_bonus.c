@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/22 14:03:35 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 15:29:05 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ ssize_t	schmove(char *buff, size_t start)
 	char	*tmp;
 
 	idx = 0;
+	if (!buff)
+		return (-1);
 	len = ft_strlen(buff);
 	tmp = malloc(len + 1);
 	if (!tmp)
@@ -105,12 +107,12 @@ char	*get_next_line(int fd)
 	if (pos_nl)
 	{
 		ret_line = ft_strldup(holder[fd], pos_nl);
-		if (schmove(holder[fd], pos_nl) != -1 && ret_line)
+		if (ret_line && schmove(holder[fd], pos_nl) != -1)
 			return (ret_line);
 		return (free(holder[fd]), free(ret_line), holder[fd] = NULL, NULL);
 	}
 	ret_line = ft_strldup(holder[fd], ft_strlen(holder[fd]));
-	if (schmove(holder[fd], ft_strlen(holder[fd])) != -1 && ret_line)
+	if (ret_line && schmove(holder[fd], ft_strlen(holder[fd])) != -1)
 		return (ret_line);
 	return (free(holder[fd]), free(ret_line), holder[fd] = NULL, NULL);
 }

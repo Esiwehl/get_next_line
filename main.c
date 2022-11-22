@@ -6,11 +6,12 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/09 19:32:12 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/13 17:04:11 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 14:37:40 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <stdio.h>
 #include "get_next_line.h"
 
 int	main(void)

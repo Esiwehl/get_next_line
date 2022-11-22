@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/22 12:36:34 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 15:01:54 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ size_t	ft_strcpy(char *dest, char *src)
 	size_t	idx;
 
 	idx = 0;
+	if (!src)
+		return (-1);
 	while (src[idx])
 	{
 		dest[idx] = src[idx];

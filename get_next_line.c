@@ -6,11 +6,12 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/20 17:58:53 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/21 21:57:09 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 15:39:22 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "stdio.h"
 
 ssize_t	schmove(char *buff, size_t start)
 {
@@ -19,6 +20,8 @@ ssize_t	schmove(char *buff, size_t start)
 	char	*tmp;
 
 	idx = 0;
+	if (!buff)
+		return (-1);
 	len = ft_strlen(buff);
 	tmp = malloc(len + 1);
 	if (!tmp)
@@ -105,12 +108,12 @@ char	*get_next_line(int fd)
 	if (pos_nl)
 	{
 		ret_line = ft_strldup(holder, pos_nl);
-		if (schmove(holder, pos_nl) != -1 && ret_line)
+		if (ret_line && schmove(holder, pos_nl) != -1)
 			return (ret_line);
 		return (free(holder), free(ret_line), holder = NULL, NULL);
 	}
 	ret_line = ft_strldup(holder, ft_strlen(holder));
-	if (schmove(holder, ft_strlen(holder)) != -1 && ret_line)
+	if (ret_line && schmove(holder, ft_strlen(holder)) != -1)
 		return (ret_line);
 	return (free(holder), free(ret_line), holder = NULL, NULL);
 }
