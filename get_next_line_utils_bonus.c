@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:40:42 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 14:22:50 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 12:36:34 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,82 +22,57 @@ size_t	ft_strlen(const char *str)
 	return (idx);
 }
 
-char	*ft_strdup(char *s1)
+char	*ft_strldup(char *s1, size_t len)
 {
-	size_t	len;
+	char	*dup;
+
+	if (!s1 || (len > ft_strlen(s1)))
+		return (NULL);
+	dup = malloc(len + 1);
+	if (!dup)
+		return (NULL);
+	dup[len] = '\0';
+	while (len--)
+		dup[len] = s1[len];
+	return (dup);
+}
+
+size_t	ft_strcpy(char *dest, char *src)
+{
 	size_t	idx;
-	char	*ret;
 
 	idx = 0;
-	len = ft_strlen(s1);
-	ret = malloc(sizeof(char) * (len + 1));
-	if (!ret)
-		return (NULL);
-	while (s1[idx])
+	while (src[idx])
 	{
-		ret[idx] = s1[idx];
+		dest[idx] = src[idx];
 		idx++;
 	}
-	ret[idx] = '\0';
-	return (ret);
+	dest[idx] = '\0';
+	return (idx);
 }
 
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s != (unsigned char) c)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
+size_t	ft_find_nl(char *buff)
 {
 	size_t	idx;
-	size_t	s1_len;
-	char	*strj;
 
-	if (!s1)
-	{
-		s1 = malloc(sizeof(char) + 1);
-		s1[0] = '\0';
-	}
-	if (!s1 || !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	strj = (char *)malloc(sizeof(char) * (s1_len + ft_strlen(s2) + 1));
-	if (!strj)
-		return (NULL);
-	idx = -1;
-	while (s1[++idx])
-		strj[idx] = s1[idx];
-	idx = -1;
-	while (s2[++idx])
-		strj[s1_len + idx] = s2[idx];
-	strj[s1_len + idx] = '\0';
-	free(s1);
-	return (strj);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*substr;
-	size_t	idx;
-
-	if (!s)
-		return (NULL);
-	if (start > ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(s))
-		len = ft_strlen(s);
-	substr = malloc(sizeof(char) + (len + 1));
-	if (!substr)
-		return (NULL);
 	idx = 0;
-	while (idx < len && s[start])
-		substr[idx++] = s[start++];
-	substr[idx] = '\0';
-	return (substr);
+	while (buff[idx])
+	{
+		if (buff[idx] == '\n')
+			return (idx + 1);
+		idx++;
+	}
+	return (0);
+}
+
+void	*ft_bzero(void *s, size_t n)
+{
+	size_t			idx;
+	unsigned char	*dest;
+
+	dest = (unsigned char *) s;
+	idx = 0;
+	while (idx < n)
+		dest[idx++] = 0;
+	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:03:06 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/08 15:49:13 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 14:05:49 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,14 @@
 # include <limits.h>
 
 char	*get_next_line(int fd);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *s1);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+
+char	*get_input(int fd, char *line);
+char	*ft_strappend(char *dst, char *src);
+char	*ft_strldup(char *s1, size_t len);
+void	*ft_bzero(void *s, size_t n);
+ssize_t	schmove(char *buff, size_t start);
 size_t	ft_strlen(const char *str);
-
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *s1);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *str);
-
-char	*put_newline(char *nline);
-char	*get_nxt(char *nxtline);
-char	*read_lines(char *line, int fd);
-
-char	*get_next_line(int fd);
+size_t	ft_strcpy(char *dest, char *src);
+size_t	ft_find_nl(char *buff);
 
 #endif

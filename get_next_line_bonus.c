@@ -6,136 +6,111 @@
 /*   By: ewehl <ewehl@student.codam.nl>               +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/29 21:01:32 by ewehl         #+#    #+#                 */
-/*   Updated: 2022/11/11 14:57:43 by ewehl         ########   odam.nl         */
+/*   Updated: 2022/11/22 14:03:35 by ewehl         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*put_newline(char *nline)
+ssize_t	schmove(char *buff, size_t start)
 {
-	char		*tmp;
-	size_t		idx;
-
-	idx = 0;
-	if (!nline[idx])
-	{
-		free(nline);
-		return (NULL);
-	}
-	while (nline[idx] != '\n' && nline[idx] != '\0')
-		idx++;
-	tmp = ft_substr(nline, 0, idx + 1);
-	if (!tmp)
-	{
-		free(tmp);
-		return (NULL);
-	}
-	return (tmp);
-}
-
-char	*get_nxt(char *nxtline)
-{
-	int		idx;
+	size_t	idx;
+	size_t	len;
 	char	*tmp;
 
 	idx = 0;
-	while (nxtline[idx])
+	len = ft_strlen(buff);
+	tmp = malloc(len + 1);
+	if (!tmp)
+		return (-1);
+	ft_strcpy(tmp, buff);
+	buff = ft_bzero(buff, len);
+	while (tmp[start + idx])
 	{
-		if (nxtline[idx] == '\n')
-		{
-			tmp = ft_strdup(&nxtline[idx + 1]);
-			free(nxtline);
-			return (tmp);
-		}
+		buff[idx] = tmp[start + idx];
 		idx++;
 	}
-	if (!nxtline[idx])
-		free(nxtline);
-	return (NULL);
+	free(tmp);
+	return (ft_strlen(buff));
 }
 
-char	*read_lines(char *line, int fd)
+char	*ft_strappend(char *dst, char *src)
 {
-	char		buff[BUFFER_SIZE + 1];
-	ssize_t		bytes_read;
+	char	*nw_str;
+	size_t	idx;
+	size_t	jdx;
 
+	if (!src)
+		return (NULL);
+	if (!dst)
+	{
+		dst = ft_strldup(src, ft_strlen(src));
+		if (!dst)
+			return (NULL);
+		return (dst);
+	}
+	nw_str = malloc(ft_strlen(src) + ft_strlen(dst) + 1);
+	if (!nw_str)
+		return (NULL);
+	ft_strcpy(nw_str, dst);
+	idx = ft_strlen(dst);
+	jdx = 0;
+	while (src[jdx])
+		nw_str[idx++] = src[jdx++];
+	nw_str[idx] = '\0';
+	return (free(dst), nw_str);
+}
+
+char	*get_input(int fd, char *line)
+{
+	char	buff[BUFFER_SIZE + 1];
+	char	*another_tmp;
+	ssize_t	bytes_read;
+	size_t	pos_nl;
+	char	*tmp;
+
+	pos_nl = 0;
+	tmp = line;
 	bytes_read = 1;
-	buff[0] = '\0';
-	while (!(ft_strchr(buff, '\n')) && bytes_read != 0)
+	while (!pos_nl && bytes_read != 0)
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read < 0)
-		{
-			free(line);
-			return (NULL);
-		}
+			return (free(tmp), NULL);
 		buff[bytes_read] = '\0';
-		line = ft_strjoin(line, buff);
+		pos_nl = ft_find_nl(buff);
+		another_tmp = ft_strappend(tmp, buff);
+		if (!another_tmp)
+			return (free(tmp), tmp = NULL, NULL);
+		tmp = another_tmp;
 	}
-	if (!line[0])
-	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
+	if (!tmp[0])
+		return (free(tmp), tmp = NULL);
+	return (tmp);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*line[OPEN_MAX];
+	static char	*holder[OPEN_MAX];
 	char		*ret_line;
+	size_t		pos_nl;
 
-	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX || fd > OPEN_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	line[fd] = read_lines(line[fd], fd);
-	if (!line[fd])
+	pos_nl = 0;
+	holder[fd] = get_input(fd, holder[fd]);
+	if (!holder[fd])
 		return (NULL);
-	ret_line = put_newline(line[fd]);
-	if (!ret_line)
-		return (NULL);
-	line[fd] = get_nxt(line[fd]);
-	return (ret_line);
-}
-
-/*#include <fcntl.h>
-int	main(void)
-{ 
-	const int	fd1 = open("foo.txt", O_RDONLY);
-	const int	fd2 = open("foo.txt", O_RDONLY);
-	char 		*str = "cheese";
-	// char *gnl;
-
-	if (fd1 < 0)
-		printf("I failed you\n");
-	else{
-		printf("Opened fd:: %d\n", fd1);}
-		// printf("Opened fd:: %d\n", fd2);}
-	
-	printf("line[fd1] = %d\n", fd1);
-	printf("line[fd2] = %d\n", fd2);
-
-	while (str)
+	pos_nl = ft_find_nl(holder[fd]);
+	if (pos_nl)
 	{
-		str = get_next_line(fd1);
-		printf("fd1:: %s\n", str);
-		free(str);
-		str = get_next_line(fd2);
-		printf("fd2:: %s\n", str);
-		free(str);
+		ret_line = ft_strldup(holder[fd], pos_nl);
+		if (schmove(holder[fd], pos_nl) != -1 && ret_line)
+			return (ret_line);
+		return (free(holder[fd]), free(ret_line), holder[fd] = NULL, NULL);
 	}
-
-	// gnl = get_next_line(fd1);
-	// printf("1 GNL ret:: %s\n", gnl);
-	// // char c = 0; read(fd1, &c, 1); printf("c = %c\n", c);
-	// free(gnl);
-	// gnl = get_next_line(fd2);
-	// printf("2 GNL ret:: %s\n", gnl);
-	// free(gnl);
-	
-	if (close(fd1) < 0) 
-		printf("Closed unsuccesfully :D\n");
-	else
-		printf("Closed succesfully :D\n");
-	system("leaks -q run");
-}*/
+	ret_line = ft_strldup(holder[fd], ft_strlen(holder[fd]));
+	if (schmove(holder[fd], ft_strlen(holder[fd])) != -1 && ret_line)
+		return (ret_line);
+	return (free(holder[fd]), free(ret_line), holder[fd] = NULL, NULL);
+}
